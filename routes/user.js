@@ -1,18 +1,26 @@
 import express from "express";
 import {
+  deleteAccount,
+  editUserDetails,
+  forgotPassword,
+  getReviews,
   getUserDataById,
   login,
   saveUserForm,
+  sendReview,
   signup,
-  taskDone,
 } from "../controllers/user.js";
 
 const router = express.Router();
 
 router.post("/login", login);
 router.post("/signup", signup);
-router.put("/save/form", saveUserForm);
+router.post("/save/form", saveUserForm);
+router.post("/edit/form", editUserDetails);
+router.post("/delete/", deleteAccount);
 router.get("/:id", getUserDataById);
-router.post("/task/done", taskDone);
+router.post("/reset/password", forgotPassword);
+router.post("/review", sendReview);
+router.get("/get/review", getReviews);
 
 export default router;

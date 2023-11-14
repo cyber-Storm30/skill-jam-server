@@ -2,12 +2,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user.js";
-import hospitalRoutes from "./routes/hospitals.js";
-import doctorRoutes from "./routes/doctor.js";
-import discussionRoutes from "./routes/discussions.js";
-import multer from "multer";
-import path from "path";
-const __dirname = path.resolve();
+import petRoutes from "./routes/pets.js";
+import insuranceCompanyRoutes from "./routes/insuranceCompany.js";
+import adoptionFormRoutes from "./routes/adoptionForm.js";
 
 const app = express();
 app.use(cors());
@@ -15,27 +12,13 @@ app.use(express.json());
 
 //routes
 app.use("/api/user", userRoutes);
-app.use("/api/hospital", hospitalRoutes);
-app.use("/api/doctor", doctorRoutes);
-app.use("/api/discussion", discussionRoutes);
-app.use("/images", express.static(path.join(__dirname, "/images")));
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  res.status(200).json("File has been uploaded");
-});
+app.use("/api/pet", petRoutes);
+app.use("/api/company", insuranceCompanyRoutes);
+app.use("/api/form", adoptionFormRoutes);
 
 const PORT = 5001;
-const MONGO_URL = "mongodb+srv://DGU:Password12!@cluster0.i2b0an9.mongodb.net/";
+const MONGO_URL =
+  "mongodb+srv://babairanajit:qAjjZoOFCe4nJAIr@cluster0.edh6m0x.mongodb.net/";
 
 let options = {
   useNewUrlParser: true,
