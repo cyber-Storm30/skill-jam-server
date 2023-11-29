@@ -27,7 +27,7 @@ export const editPet = async (req, res) => {
 
 export const getAllPet = async (req, res) => {
   try {
-    const pets = await PetModel.find().populate("userId");
+    const pets = await PetModel.find({ isAdopted: false }).populate("userId");
     res.status(200).json({ data: pets, error: false });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -68,8 +68,12 @@ export const checkAdoptionRequestStatus = async (req, res) => {
       ],
     });
     console.log(isRequestSent);
-    if (isRequestSent) {
-      return res.status(200).json({ message: "Request present", error: false });
+    if (isRequestSent?.requestStatus === "PENDING") {
+      return res.status(200).json({ message: "Request pending", error: false });
+    } else if (isRequestSent?.requestStatus === "ACCEPTED") {
+      return res
+        .status(201)
+        .json({ message: "Request accepted", error: false });
     } else {
       return res
         .status(404)

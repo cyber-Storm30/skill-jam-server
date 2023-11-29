@@ -1,4 +1,5 @@
 import AdoptionForm from "../models/adoptionForm.js";
+import PetModel from "../models/pets.js";
 
 export const addForm = async (req, res) => {
   try {
@@ -63,7 +64,8 @@ export const acceptRequest = async (req, res) => {
     const { requestId } = req.body;
     const request = await AdoptionForm.findById(requestId);
     await request.updateOne({ requestStatus: "ACCEPTED" });
-    res.status(200).json({ message: "Request accepted", error: false });
+    await PetModel.findByIdAndUpdate(request.pet, { isAdopted: true });
+    await res.status(200).json({ message: "Request accepted", error: false });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

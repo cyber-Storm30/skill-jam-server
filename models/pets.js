@@ -38,6 +38,10 @@ const petSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isAdopted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
