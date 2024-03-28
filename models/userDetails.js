@@ -15,9 +15,17 @@ const userDetailsSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    address: {
+    collage: {
       type: String,
       default: "",
+    },
+    job: {
+      type: String,
+      default: "",
+    },
+    hobbies: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }

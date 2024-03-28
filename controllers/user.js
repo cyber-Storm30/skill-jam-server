@@ -66,7 +66,7 @@ export const getUserDataById = async (req, res) => {
 
 export const editUserDetails = async (req, res) => {
   try {
-    const { userDetailsId, name, mobile, address } = req.body;
+    const { userDetailsId, name, mobile, hobbies, job, collage } = req.body;
     const userDetails = await UserDetails.findById(userDetailsId);
     if (!userDetails) {
       return res.status(404).json("User not found");
@@ -76,7 +76,9 @@ export const editUserDetails = async (req, res) => {
       {
         name,
         mobile,
-        address,
+        hobbies,
+        job,
+        collage,
       },
       { new: true }
     );
