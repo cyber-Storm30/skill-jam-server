@@ -11,6 +11,10 @@ const userDetailsSchema = new mongoose.Schema(
       required: true,
       default: "",
     },
+    image: {
+      type: String,
+      default: "",
+    },
     mobile: {
       type: String,
       default: "",

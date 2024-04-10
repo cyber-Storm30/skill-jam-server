@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import UserDetails from "../models/userDetails.js";
 import ReviewModel from "../models/reviews.js";
+import PostModel from "../models/post.js";
 import bcrypt from "bcryptjs";
 
 export const login = async (req, res) => {
@@ -59,6 +60,17 @@ export const getUserDataById = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id).populate("doctors");
     res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const getUserPosts = async (req, res) => {
+  try {
+    const posts = await PostModel.find({ userId: req.params.id }).populate(
+      "userId"
+    );
+    res.status(200).json({ data: posts });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

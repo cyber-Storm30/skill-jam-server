@@ -5,6 +5,7 @@ import {
   forgotPassword,
   getReviews,
   getUserDataById,
+  getUserPosts,
   login,
   saveUserForm,
   sendReview,
@@ -22,5 +23,6 @@ router.get("/:id", getUserDataById);
 router.post("/reset/password", forgotPassword);
 router.post("/review", sendReview);
 router.get("/get/review", getReviews);
+router.get("/posts/:id", getUserPosts);
 
 export default router;
