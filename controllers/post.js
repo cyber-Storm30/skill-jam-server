@@ -23,22 +23,29 @@ export const getAllPosts = async (req, res) => {
 };
 
 const extractNames = (items) => {
-  return items.map((item) => item.name);
+  let newArray = [];
+  items.forEach((item) => {
+    if (item.isSelected === true) {
+      newArray.push(item);
+    }
+  });
+  return newArray;
 };
 
 export const filterPosts = async (req, res) => {
   try {
-    if (req.body.categories.length === 0) {
+    const filteredArray = extractNames(req.body.categories);
+    if (filteredArray.length === 0) {
       const posts = await PostModel.find()
         .populate("userId")
         .sort({ createdAt: -1 });
-      res.status(200).json({ data: posts });
+      return res.status(200).json({ data: posts });
     }
-    const filteredArray = extractNames(req.body.categories);
-
     const posts = await PostModel.find({
-      "categories.name": {
-        $in: filteredArray,
+      categories: {
+        $elemMatch: {
+          $or: filteredArray,
+        },
       },
     })
       .populate("userId")

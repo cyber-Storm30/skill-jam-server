@@ -67,9 +67,9 @@ export const getUserDataById = async (req, res) => {
 
 export const getUserPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find({ userId: req.params.id }).populate(
-      "userId"
-    );
+    const posts = await PostModel.find({ userId: req.params.id })
+      .sort({ createdAt: -1 })
+      .populate("userId");
     res.status(200).json({ data: posts });
   } catch (err) {
     res.status(500).json({ message: err.message });
